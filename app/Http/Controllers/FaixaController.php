@@ -51,8 +51,12 @@ class FaixaController extends Controller
 
     public function destroy($id)
     {
-        Faixa::findOrFail($id)->delete();
+        $faixa = Faixa::find($id);
+        if (!$faixa) {
+            return response()->json(['message' => 'Faixa não encontrada'], 404);
+        }
+        $faixa->delete();
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Faixa excluída com sucesso.'], 200);
     }
 }

@@ -48,8 +48,13 @@ class AlbumController extends Controller
 
     public function destroy($id)
     {
-        Album::findOrFail($id)->delete();
+        $album = Album::find($id);
+        if (!$album) {
+            return response()->json(['message' => 'Álbum não encontrado'], 404);
+        }
 
-        return response()->json(null, 204);
+        $album->delete();
+
+        return response()->json(['message' => 'Álbum excluído com sucesso.'], 200);
     }
 }
