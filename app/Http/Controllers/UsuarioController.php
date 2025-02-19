@@ -1,5 +1,5 @@
 <?php
-// app/Http/Controllers/UsuarioController.php
+
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
@@ -34,22 +34,18 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Encontra o usuário pelo ID, caso contrário, lança um erro 404 automaticamente
         $usuario = Usuario::findOrFail($id);
 
-        // Validação dos dados recebidos na requisição
         $request->validate([
             'nome' => 'required',
             'data_nascimento' => 'required|date',
             'sexo' => 'required',
-            'usuario' => 'required|unique:usuarios,usuario,' . $usuario->id, // Permite que o próprio usuário mantenha o nome
-            'senha' => 'required',
+            'usuario' => 'required|unique:usuarios,usuario,' . $usuario->id,
+            'senha' => 'required', // se o usuario nao quiser trocar a senha, alterar aqui
         ]);
 
-        // Atualiza o usuário com os dados da requisição
         $usuario->update($request->all());
 
-        // Retorna a resposta com o usuário atualizado
         return response()->json([
             'message' => 'Usuário atualizado com sucesso.',
             'data' => $usuario
@@ -59,7 +55,7 @@ class UsuarioController extends Controller
 
     public function destroy($id)
     {
-        $usuario = usuario::find/*OrFail*/($id); // retirar o comentário do fail caso lá an frente de erro
+        $usuario = usuario::find/*OrFail*/($id); // retirar o comentário do fail caso lá na frente de erro
         if (!$usuario) {
             return response()->json(['message' => 'Usuário não encontrado'], 404);
         }

@@ -1,12 +1,9 @@
 <?php
-
-// app/Http/Controllers/FaixaController.php
-// app/Http/Controllers/FaixaController.php
 namespace App\Http\Controllers;
 
 use App\Models\Faixa;
 use Illuminate\Http\Request;
-
+use App\Models\Album;
 class FaixaController extends Controller
 {
     public function index()
@@ -59,4 +56,6 @@ class FaixaController extends Controller
 
         return response()->json(['message' => 'Faixa excluída com sucesso.'], 200);
     }
+
+    
 }
