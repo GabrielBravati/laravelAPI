@@ -1,14 +1,21 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Faixa;
 use Illuminate\Http\Request;
 use App\Models\Album;
+
 class FaixaController extends Controller
 {
     public function index()
     {
-        return Faixa::all();
+        if (request()->wantsJson()) {
+            return Faixa::all();
+        }
+
+        $faixas = Faixa::all();
+        return view('faixas.index', compact('faixas'));
     }
 
     public function store(Request $request)
@@ -48,14 +55,15 @@ class FaixaController extends Controller
 
     public function destroy($id)
     {
-        $faixa = Faixa::find($id);
-        if (!$faixa) {
-            return response()->json(['message' => 'Faixa não encontrada'], 404);
-        }
+        $faixa = Faixa::findOrFail($id);
         $faixa->delete();
 
         return response()->json(['message' => 'Faixa excluída com sucesso.'], 200);
     }
 
-    
+    public function create()
+    {
+        $albuns = Album::all();
+        return view('faixas.create', compact('albuns'));
+    }
 }

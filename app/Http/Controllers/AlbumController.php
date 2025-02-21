@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Album;
 use Illuminate\Http\Request;
+use App\Models\Album;
 
 class AlbumController extends Controller
 {
     public function index()
-
     {
-        return Album::with('faixas')->get();
+        // Verifica se a requisição quer um retorno em JSON ou uma visão
+        if (request()->wantsJson()) {
+            return Album::with('faixas')->get();
+        }
+
+        // Se não for uma requisição JSON, retorna a visão com todos os álbuns
+        $albuns = Album::all();
+        return view('albuns.index', compact('albuns'));
     }
 
     public function store(Request $request)
@@ -56,5 +62,10 @@ class AlbumController extends Controller
         $album->delete();
 
         return response()->json(['message' => 'Álbum excluído com sucesso.'], 200);
+    }
+
+    public function create()
+    {
+        return view('albuns.create');
     }
 }

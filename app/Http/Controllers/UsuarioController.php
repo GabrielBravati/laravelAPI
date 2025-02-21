@@ -6,10 +6,12 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
+
 {
     public function index()
     {
-        return Usuario::all();
+        $usuarios=Usuario::all();
+        return view('usuarios.index', compact('usuarios'));
     }
 
     public function store(Request $request)
@@ -22,7 +24,9 @@ class UsuarioController extends Controller
             'senha' => 'required',
         ]);
 
-        $usuario = Usuario::create($request->all());
+        $usuario = new Usuario();
+        $usuario = $request->all();
+        $usuario-> save();;
 
         return response()->json($usuario, 201);
     }
@@ -64,4 +68,12 @@ class UsuarioController extends Controller
 
         return response()->json(['message' => 'Usuário excluído com sucesso.'], 200);
     }
+
+    public function create(){
+        return view('usuarios.create');
+    }
+    public function edit($id){
+        $usuario = Usuario::findOrFail($id);
+    return view('usuarios.edit', compact('usuario'));
+}
 }
