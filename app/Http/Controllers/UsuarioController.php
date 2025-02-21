@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/UsuarioController.php
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
@@ -20,6 +19,7 @@ class UsuarioController extends Controller
             'sexo' => 'required',
             'usuario' => 'required|unique:usuarios',
             'senha' => 'required',
+            'tipo' => 'required'
         ]);
 
         $usuario = Usuario::create($request->all());
@@ -42,6 +42,7 @@ class UsuarioController extends Controller
             'sexo' => 'required',
             'usuario' => 'required|unique:usuarios,usuario,' . $usuario->id,
             'senha' => 'required',
+            'tipo' => 'required'
         ]);
 
         $usuario->update($request->all());

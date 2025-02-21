@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/FaixaController.php
-// app/Http/Controllers/FaixaController.php
 namespace App\Http\Controllers;
 
 use App\Models\Faixa;

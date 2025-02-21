@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/AlbumController.php
 namespace App\Http\Controllers;
 
 use App\Models\Album;
